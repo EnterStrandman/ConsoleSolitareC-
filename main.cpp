@@ -1,11 +1,10 @@
 #include <iostream>
-#include <array>
 #include <cstdlib>
 #include <random>
 #include <algorithm>
 #include <iterator>
-#include <list>
 #include <ostream>
+#include <vector>
 
 
 using namespace std;
@@ -14,7 +13,7 @@ class card{
     public:
         //CONSTRCUTORS
         card();
-        card(int cardFace, int cardSuit);
+        card(int cardFace, int cardSuit, bool visible);
 
         //getters
         int getFaceVal(){
@@ -25,84 +24,101 @@ class card{
             return suit;
         }
 
+        bool getVisible(){
+            return visible;
+        }
         //setters
-        int setFaceVal(int faceVal){
+        void setFaceVal(int faceVal){
             this->face = faceVal;
         }
 
-        int setSuitVal(int suitVal){
+        void setSuitVal(int suitVal){
             this->suit = suitVal;
+        }
+
+        void setVisible(bool vis){
+            this->visible = true;
         }
 
     private:
         int face;
         int suit;
+        bool visible;
 };
 
-void showCards(list<card> myList1,list<card> myList2,list<card> myList3,list<card> myList4,list<card> myList5,list<card> myList6,list<card> myList7);
+void printBoard();
+void instructions();
 
 int main()
 {
 /*GAME SET UP*/
 
     //create deck to be used in solitaire
-    card myDeck[52];
+    vector<card> myDeck;
     //Slots that need completed to win
-    list <card> spadesFinal;
-    list <card> clubsFinal;
-    list <card> heartsFinal;
-    list <card> diamondsFinal;
+    vector<card> spadesFinal;
+    vector<card> clubsFinal;
+    vector<card> heartsFinal;
+    vector<card> diamondsFinal;
     //Slots for board
-    list <card> s1;
-    list <card> s2;
-    list <card> s3;
-    list <card> s4;
-    list <card> s5;
-    list <card> s6;
-    list <card> s7;
+    vector<card> s1;
+    vector<card> s2;
+    vector<card> s3;
+    vector<card> s4;
+    vector<card> s5;
+    vector<card> s6;
+    vector<card> s7;
 
     int counter = 0;
 
     //Create the deck
     for(int i=1; i<=13; i++){
         for(int j=0; j<4; j++){
-            myDeck[counter] = card(i,j);
+            myDeck.push_back(card(i,j, false));
             counter++;
         }
     }
 
     //shuffle the cards
     random_shuffle(&myDeck[0], &myDeck[51]);
-
+    cout << "the deck has been shuffled" << endl;
     //deal the deck
     int pos = 0;
+    int iterations = 0;
     while(pos < 28){
         if(s1.size() < 1){
-            s1.push_front(myDeck[pos]);
+            s1.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
         if(s2.size() < 2){
-            s2.push_front(myDeck[pos]);
+            s2.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
         if(s3.size() < 3){
-            s3.push_front(myDeck[pos]);
+            s3.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
         if(s4.size() < 4){
-            s4.push_front(myDeck[pos]);
+            s4.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
         if(s5.size() < 5){
-            s5.push_front(myDeck[pos]);
+            s5.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
         if(s6.size() < 6){
-            s6.push_front(myDeck[pos]);
+            s6.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
         if(s7.size() < 7){
-            s7.push_front(myDeck[pos]);
+            s7.push_back(myDeck.back());
+            myDeck.pop_back();
             pos++;
         }
     }
@@ -110,7 +126,7 @@ int main()
     //print the beginning board
     cout << "Slot1  Slot2   Slot3   Slot4   Slot5   Slot6   Slot7";
 
-    showCards(s1,s2,s3,s4,s5,s6,s7);
+
 
 
     return 0;
@@ -119,22 +135,20 @@ int main()
 card::card(){
     face = 0;
     suit = 0;
+    visible = false;
 }
 
-card::card(int cardFace, int cardSuit){
+card::card(int cardFace, int cardSuit, bool visible){
     this->face = cardFace;
     this->suit = cardSuit;
+    this->visible = visible;
 }
 
 void instructions(){
     cout << "Type instructions here";
 }
 
-void showCards(list<card> myList1,list<card> myList2,list<card> myList3,list<card> myList4,list<card> myList5,list<card> myList6,list<card> myList7){
-    int totalCards =  myList1.size() + myList2.size() + myList3.size() + myList4.size() + myList5.size() + myList6.size() + myList7.size();
-    int printed = 0;
-    int largestList;
-
+void printBoard(){
 
 }
 
